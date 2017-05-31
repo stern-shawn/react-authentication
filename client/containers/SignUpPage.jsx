@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 import SignUpForm from '../components/SignUpForm.jsx';
 import axios from 'axios';
 
@@ -45,11 +46,12 @@ class SignUpPage extends Component {
       email: this.state.user.email,
       password: this.state.user.password,
     }).then((res) => {
-      // TODO
-      console.log(res);
       this.setState({
         errors: {},
       });
+
+      localStorage.setItem('successMessage', res.data.message);
+      browserHistory.push('/login');
     }).catch((err) => {
       // Grab the errors object from the response and map to state
       const errors = err.response.data.errors ? err.response.data.errors : {};

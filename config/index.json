@@ -1,0 +1,4 @@
+{
+  "dbUri": "mongodb://shawn:dickflop@ds139438.mlab.com:39438/react-authentication",
+  "jwtSecret": "super secret phrase!!"
+}
