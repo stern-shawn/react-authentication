@@ -53,7 +53,7 @@ class SignUpPage extends Component {
     }).catch((err) => {
       // Grab the errors object from the response and map to state
       const errors = err.response.data.errors ? err.response.data.errors : {};
-      errors.summary = err.message;
+      errors.summary = err.response.data.message ? err.response.data.message : '';
       this.setState({
         errors,
       });
