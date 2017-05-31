@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import SignUpForm from '../components/SignUpForm.jsx';
+import axios from 'axios';
 
 class SignUpPage extends Component {
   constructor(props) {
@@ -39,9 +40,24 @@ class SignUpPage extends Component {
     // prevent default form submission event
     e.preventDefault();
 
-    console.log('name:', this.state.user.name);
-    console.log('email:', this.state.user.email);
-    console.log('password:', this.state.user.password);
+    axios.post('/auth/signup', {
+      name: this.state.user.name,
+      email: this.state.user.email,
+      password: this.state.user.password,
+    }).then((res) => {
+      // TODO
+      console.log(res);
+      this.setState({
+        errors: {},
+      });
+    }).catch((err) => {
+      // Grab the errors object from the response and map to state
+      const errors = err.response.data.errors ? err.response.data.errors : {};
+      errors.summary = err.message;
+      this.setState({
+        errors,
+      });
+    });
   }
 
   render() {

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import LoginForm from '../components/LoginForm.jsx';
+import axios from 'axios';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -37,8 +38,23 @@ class LoginPage extends React.Component {
   processForm = (e) => {
     e.preventDefault();
 
-    console.log('email:', this.state.user.email);
-    console.log('password:', this.state.user.password);
+    axios.post('/auth/login', {
+      email: this.state.user.email,
+      password: this.state.user.password,
+    }).then((res) => {
+      // TODO
+      console.log(res);
+      this.setState({
+        errors: {},
+      });
+    }).catch((err) => {
+      // Grab the errors object from the response and map to state
+      const errors = err.response.data.errors ? err.response.data.errors : {};
+      errors.summary = err.message;
+      this.setState({
+        errors,
+      });
+    });
   }
 
   render() {
